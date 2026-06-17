@@ -3,3 +3,6 @@ langchain-groq
 langchain-core
 ddgs
 python-dotenv
+google-auth-oauthlib 
+google-auth-httplib2 
+google-api-python-client
