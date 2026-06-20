@@ -14,14 +14,6 @@ needs_confirmation = False
 def chat(user_input, history):
     global conversation_history, pending_action, needs_confirmation
 
-    context = ""
-    if conversation_history:
-        context = "Previous conversation:\n"
-        for msg in conversation_history[-4:]:
-            context += f"{msg}\n"
-        context += "\n"
-
-    full_input = context + f"User: {user_input}"
 
     result = agent.invoke({
         "user_input": user_input,  # ✅ clean, just the current message
