@@ -11,9 +11,9 @@ from tools.gmail_tool import (
     reply_to_email
 )
 from datetime import datetime
-
 class AgentState(TypedDict):
     user_input: str
+    conversation_history: List[str]  # ✅ add this line
     thought: str
     plan: List[str]
     actions_taken: List[str]
