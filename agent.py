@@ -28,9 +28,17 @@ def think(state: AgentState):
     today = datetime.now().strftime("%A, %d %B %Y, %I:%M %p")
     print("\n🧠 Thinking...")
 
+    # ✅ Build history context cleanly
+    history_text = ""
+    if state.get('conversation_history'):
+        history_text = "Previous conversation:\n"
+        for msg in state['conversation_history']:
+            history_text += f"{msg}\n"
+        history_text += "\n"
+
     prompt = f"""You are a smart AI assistant. Today is {today}.
 
-Analyze this user request carefully and break it down.
+{history_text}Analyze this user request carefully and break it down.
 
 User request: {state['user_input']}
 
@@ -45,11 +53,6 @@ Think step by step:
 
 Write your thought process clearly:"""
 
-    # response = llm.invoke(prompt)
-    # thought = response.content
-    # print(f"   💭 {thought[:200]}...")
-    # return {"thought": thought, "loop_count": state.get("loop_count", 0) + 1}
-    
     response = llm.invoke(prompt)
     thought = response.content
     print(f"   💭 {thought[:200]}...")
