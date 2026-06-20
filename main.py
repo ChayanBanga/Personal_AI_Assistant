@@ -24,7 +24,8 @@ def chat(user_input, history):
     full_input = context + f"User: {user_input}"
 
     result = agent.invoke({
-        "user_input": full_input,
+        "user_input": user_input,  # ✅ clean, just the current message
+        "conversation_history": conversation_history[-4:],  # ✅ separate field
         "thought": "",
         "plan": [],
         "actions_taken": [],
@@ -34,7 +35,6 @@ def chat(user_input, history):
         "pending_action": pending_action,
         "loop_count": 0
     })
-
     pending_action = result.get('pending_action', '')
     needs_confirmation = result.get('needs_confirmation', False)
 
