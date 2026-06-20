@@ -45,10 +45,18 @@ Think step by step:
 
 Write your thought process clearly:"""
 
+    # response = llm.invoke(prompt)
+    # thought = response.content
+    # print(f"   💭 {thought[:200]}...")
+    # return {"thought": thought, "loop_count": state.get("loop_count", 0) + 1}
+    
     response = llm.invoke(prompt)
     thought = response.content
     print(f"   💭 {thought[:200]}...")
-    return {"thought": thought, "loop_count": state.get("loop_count", 0) + 1}
+    return {"thought": thought}
+
+
+
 
 # ─── STEP 2: PLAN ────────────────────────────────────────
 def plan(state: AgentState):
@@ -103,6 +111,7 @@ def act(state: AgentState):
     actions_taken = state.get('actions_taken', [])
     needs_confirmation = False
     pending_action = ""
+    loop_count = state.get("loop_count", 0) + 1
 
     for action in plan_list:
         print(f"   🔧 Executing: {action}")
@@ -192,7 +201,8 @@ Respond helpfully:"""
         "observations": observations,
         "actions_taken": actions_taken,
         "needs_confirmation": needs_confirmation,
-        "pending_action": pending_action
+        "pending_action": pending_action,
+        "loop_count": loop_count  # ✅ return it here
     }
 
 # ─── STEP 4: OBSERVE + ANSWER ────────────────────────────
